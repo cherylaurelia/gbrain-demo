@@ -1,0 +1,28 @@
+[
+ {
+  "tool": "ToolSearch",
+  "input": {
+   "query": "select:mcp__gbrain__recall,mcp__gbrain__entity",
+   "max_results": 5
+  }
+ },
+ {
+  "result": "[{\"type\": \"tool_reference\", \"tool_name\": \"mcp__gbrain__recall\"}, {\"type\": \"tool_reference\", \"tool_name\": \"mcp__gbrain__entity\"}]"
+ },
+ {
+  "tool": "mcp__gbrain__recall",
+  "input": {
+   "query": "Postgres upgrade OR pg_upgrade OR PostgreSQL upgrade OR database upgrade"
+  }
+ },
+ {
+  "result": "[{\"type\": \"text\", \"text\": \"{\\\"facts\\\":[],\\\"total\\\":0,\\\"facts_order\\\":\\\"newest\\\",\\\"protocol_version\\\":1,\\\"results\\\":[{\\\"slug\\\":\\\"facts\\\",\\\"title\\\":\\\"Facts: Larkfield Labs (fictional demo company)\\\",\\\"chunk\\\":\\\"# Facts: Larkfield Labs (fictional demo company)\\\\n\\\\n- Product: Larkfield, a shared grocery-list app for households. 4 engineers.\\\\n- Staging runs in AWS eu-west-2. Staging Postgres host: pg-stg-3.larkfield.internal, database `larkfield_stg`.\\\\n- Production Postgres is 15.6; the upgrade to Postgres 17 is owned by Priya Raman (infra). Tomasz Wilk is the backup reviewer for any database change.\\\\n- CI uses Node 22.11 exactly. Node 24 breaks our jsdom tests (built-in localStorage), so do not bump it.\\\\n- Error tracking: self-hosted GlitchTip at https://errors.larkfield.example. We do not use Sentry.\\\\n- Support email: help@larkfield.example. Replies are signed \\\\\\\"The Larkfield team\\\\\\\".\\\",\\\"evidence\\\":\\\"weak_semantic\\\",\\\"create_safety\\\":\\\"unknown\\\",\\\"provenance\\\":\\\"facts\\\",\\\"source_id\\\":\\\"company\\\",\\\"trust_tier\\\":\\\"operator_curated\\\",\\\"origin\\\":\\\"managed_file_import\\\"},{\\\"slug\\\":\\\"call-2026-11-04\\\",\\\"title\\\":\\\"Call transcript: 2026-11-04 weekly sync\\\",\\\"chunk\\\":\\\"# Call transcript: 2026-11-04 weekly sync\\\\n\\\\nAna: Reminder, Paddle only for anything new in checkout. Nobody adds Stripe calls.\\\\nPriya: Postgres 17 upgrade is mine, targeting the week of Dec 7. Tomasz reviews the migration.\\\\nTomasz: CI stays on Node 22.11 until jsdom fixes the localStorage clash.\\\",\\\"evidence"
+ },
+ {
+  "text": "Loop in these two people:\n\n- **Priya Raman (infra)** owns the upgrade. Production Postgres is on 15.6 and is moving to Postgres 17.\n- **Tomasz Wilk** is the reviewer for the migration. The company facts page lists them as the backup reviewer for any database change.\n\n**Timing:** Priya said in the 2026-11-04 weekly sync that she's targeting the **week of Dec 7** (2026). That's a target, not a confirmed date. I'd check with Priya before you announce it."
+ },
+ {
+  "final": "Loop in these two people:\n\n- **Priya Raman (infra)** owns the upgrade. Production Postgres is on 15.6 and is moving to Postgres 17.\n- **Tomasz Wilk** is the reviewer for the migration. The company facts page lists them as the backup reviewer for any database change.\n\n**Timing:** Priya said in the 2026-11-04 weekly sync that she's targeting the **week of Dec 7** (2026). That's a target, not a confirmed date. I'd check with Priya before you announce it.",
+  "num_turns": 3
+ }
+]

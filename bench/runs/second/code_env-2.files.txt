@@ -1,0 +1,40 @@
+=== ./README.md
+# larkfield-api
+Express API for the Larkfield grocery-list app. `npm start`.
+=== ./package.json
+{ "name": "larkfield-api", "version": "0.3.0", "type": "module", "main": "src/server.js",
+  "scripts": { "start": "node src/server.js", "test": "node --test" },
+  "dependencies": { "express": "^5.1.0", "pg": "^8.16.0" } }
+=== ./.env.example
+# larkfield-api: staging environment
+# Copy to .env and fill in the values. Never commit the real .env.
+# Note: the app doesn't load .env files itself. Use `node --env-file=.env src/server.js`
+# or export the variables in your shell.
+
+# Port the API listens on (defaults to 3000 if unset)
+PORT=3000
+
+# Postgres connection string for the STAGING database
+# Format: postgres://USER:PASSWORD@HOST:5432/DBNAME
+# Get the real host and credentials from your team's secret store.
+DATABASE_URL=postgres://larkfield_staging:CHANGE_ME@staging-db.example.internal:5432/larkfield_staging
+=== ./src/server.js
+import express from 'express';
+import { listsForHousehold } from './lists.js';
+
+const app = express();
+app.use(express.json());
+
+app.get('/households/:id/lists', async (req, res) => {
+  res.json(await listsForHousehold(req.params.id));
+});
+
+app.listen(process.env.PORT || 3000);
+=== ./src/lists.js
+import pg from 'pg';
+const pool = new pg.Pool({ connectionString: process.env.DATABASE_URL });
+
+export async function listsForHousehold(id) {
+  const { rows } = await pool.query('select * from lists where household_id = $1', [id]);
+  return rows;
+}

@@ -1,0 +1,32 @@
+[
+ {
+  "text": "I'll check GBrain first for what we've said about SSO and the Team plan."
+ },
+ {
+  "tool": "ToolSearch",
+  "input": {
+   "query": "select:mcp__gbrain__recall",
+   "max_results": 1
+  }
+ },
+ {
+  "result": "[{\"type\": \"tool_reference\", \"tool_name\": \"mcp__gbrain__recall\"}]"
+ },
+ {
+  "tool": "mcp__gbrain__recall",
+  "input": {
+   "query": "SSO single sign-on Team plan OR pricing OR plans OR SAML OR Enterprise",
+   "question": "Do we support SSO, and on which plans?"
+  }
+ },
+ {
+  "result": "[{\"type\": \"text\", \"text\": \"{\\\"facts\\\":[],\\\"total\\\":0,\\\"facts_order\\\":\\\"relevance\\\",\\\"facts_degraded\\\":{\\\"reason\\\":\\\"keyword_only_embedding_disabled\\\"},\\\"protocol_version\\\":1,\\\"results\\\":[{\\\"slug\\\":\\\"decisions\\\",\\\"title\\\":\\\"Decisions log\\\",\\\"chunk\\\":\\\"# Decisions log\\\\n\\\\n## 2026-09-03: Payments move from Stripe to Paddle\\\\nDecided by Ana Okafor (CEO). Reason: Paddle is merchant of record, so we stop filing VAT in 14 EU countries ourselves. All new payment code uses the Paddle Billing API (`@paddle/paddle-node-sdk`). Stripe code is frozen and will be removed in January.\\\\n\\\\n## 2026-10-01: Keep the free plan\\\\nDecided by Ana Okafor. Reason: 38% of paid households started on free, and students asked for it in the October survey. Free stays capped at 2 lists.\\\\n\\\\n## 2026-10-20: SSO only on the Enterprise plan, shipping Q1 2027\\\\nDecided by Ana Okafor and Priya Raman. SAML SSO is not available today. It ships in Q1 2027 and only on Enterprise. Do not promise it on Team.\\\\n\\\\n## 2026-10-28: Sentry rejected\\\\nWe tried Sentry for two weeks; the event volume cost was too high. We self-host GlitchTip instead (Sentry-compatible SDK, DSN in GLITCHTIP_DSN).\\\",\\\"evidence\\\":\\\"weak_semantic\\\",\\\"create_safety\\\":\\\"unknown\\\",\\\"provenance\\\":\\\"decisions\\\",\\\"source_id\\\":\\\"company\\\",\\\"trust_tier\\\":\\\"operator_curated\\\",\\\"origin\\\":\\\"managed_file_import\\\"}],\\\"search_degraded\\\":\\\"keyword_only_embedding_disabled\\\"}\"}, {\"type\": \"text\", \"text\": \"[gbrain notice degraded_recall kind=degraded]\\nwhy: Recall"
+ },
+ {
+  "text": "Here's a draft reply:\n\n---\n\n**Subject: Re: SSO on the Team plan**\n\nHi [Name],\n\nThanks for asking. SSO isn't available today, including on the Team plan.\n\nWe're building SAML SSO, and it's planned for Q1 2027. It will be an Enterprise-plan feature, so it won't come to Team. If SSO is a requirement for you, I'd be glad to put you in touch with us about Enterprise. In the meantime, your Team plan keeps working as it does now.\n\nLet me know if you'd like me to set that up, or if there's anything else I can help with.\n\nBest,\n[Your name]\n\n---\n\nI based this on the 2026-10-20 decision in the decisions log: SSO is Enterprise-only and ships in Q1 2027. The log says not to promise it on Team, so the draft doesn't. The Q1 2027 date is a plan, not a commitment, so you may want to soften it further if you'd rather not name a timeframe."
+ },
+ {
+  "final": "Here's a draft reply:\n\n---\n\n**Subject: Re: SSO on the Team plan**\n\nHi [Name],\n\nThanks for asking. SSO isn't available today, including on the Team plan.\n\nWe're building SAML SSO, and it's planned for Q1 2027. It will be an Enterprise-plan feature, so it won't come to Team. If SSO is a requirement for you, I'd be glad to put you in touch with us about Enterprise. In the meantime, your Team plan keeps working as it does now.\n\nLet me know if you'd like me to set that up, or if there's anything else I can help with.\n\nBest,\n[Your name]\n\n---\n\nI based this on the 2026-10-20 decision in the decisions log: SSO is Enterprise-only and ships in Q1 2027. The log says not to promise it on Team, so the draft doesn't. The Q1 2027 date is a plan, not a commitment, so you may want to soften it further if you'd rather not name a timeframe.",
+  "num_turns": 3
+ }
+]

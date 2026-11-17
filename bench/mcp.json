@@ -1,0 +1,18 @@
+{
+ "mcpServers": {
+  "gbrain": {
+   "type": "stdio",
+   "command": "<bench>/bench/mcp-wrap.sh",
+   "args": [
+    "~/scratch/gbbench-home/.gbrain/hook-launcher/gbrain-hook",
+    "~/scratch/gbhome/.bun/bin/gbrain",
+    "serve",
+    "--surface",
+    "starter",
+    "--advertise",
+    "verbs"
+   ],
+   "env": {}
+  }
+ }
+}

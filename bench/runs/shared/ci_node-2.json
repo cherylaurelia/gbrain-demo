@@ -1,0 +1,80 @@
+[
+ {
+  "text": "I'll check GBrain first, as the project instructions say, and look at the project at the same time."
+ },
+ {
+  "tool": "ToolSearch",
+  "input": {
+   "query": "select:mcp__gbrain__search,mcp__gbrain__query",
+   "max_results": 2
+  }
+ },
+ {
+  "result": "[{\"type\": \"tool_reference\", \"tool_name\": \"mcp__gbrain__search\"}, {\"type\": \"tool_reference\", \"tool_name\": \"mcp__gbrain__query\"}]"
+ },
+ {
+  "tool": "Bash",
+  "input": {
+   "command": "ls -a && cat package.json && ls .github/workflows 2>/dev/null; ls package-lock.json yarn.lock pnpm-lock.yaml 2>/dev/null; cat .nvmrc 2>/dev/null",
+   "description": "Inspect project files"
+  }
+ },
+ {
+  "result": "\"Exit code 1\\n.\\n..\\nCLAUDE.md\\nREADME.md\\npackage.json\\nsrc\\n{ \\\"name\\\": \\\"larkfield-api\\\", \\\"version\\\": \\\"0.3.0\\\", \\\"type\\\": \\\"module\\\", \\\"main\\\": \\\"src/server.js\\\",\\n  \\\"scripts\\\": { \\\"start\\\": \\\"node src/server.js\\\", \\\"test\\\": \\\"node --test\\\" },\\n  \\\"dependencies\\\": { \\\"express\\\": \\\"^5.1.0\\\", \\\"pg\\\": \\\"^8.16.0\\\" } }\""
+ },
+ {
+  "tool": "mcp__gbrain__search",
+  "input": {
+   "query": "larkfield-api CI GitHub Actions",
+   "limit": 5
+  }
+ },
+ {
+  "result": "[{\"type\": \"text\", \"text\": \"[{\\\"slug\\\":\\\"facts\\\",\\\"title\\\":\\\"Facts: Larkfield Labs (fictional demo company)\\\",\\\"type\\\":\\\"note\\\",\\\"chunk_text\\\":\\\"# Facts: Larkfield Labs (fictional demo company)\\\\n\\\\n- Product: Larkfield, a shared grocery-list app for households. 4 engineers.\\\\n- Staging runs in AWS eu-west-2. Staging Postgres host: pg-stg-3.larkfield.internal, database `larkfield_stg`.\\\\n- Production Postgres is 15.6; the upgrade to Postgres 17 is owned by Priya Raman (infra). Tomasz Wilk is the backup reviewer for any database change.\\\\n- CI uses Node 22.11 exactly. Node 24 breaks our jsdom tests (built-in localStorage), so do not bump it.\\\\n- Error tracking: self-hosted GlitchTip at https://errors.larkfield.example. We do not use Sentry.\\\\n- Support email: help@larkfield.example. Replies are signed \\\\\\\"The Larkfield team\\\\\\\".\\\",\\\"chunk_id\\\":1,\\\"score\\\":1,\\\"source_id\\\":\\\"company\\\",\\\"effective_date\\\":\\\"2026-11-17\\\",\\\"effective_date_source\\\":\\\"fallback\\\",\\\"evidence\\\":\\\"weak_semantic\\\",\\\"create_safety\\\":\\\"unknown\\\",\\\"id\\\":\\\"gbrain-page:v1:WyJjb21wYW55IiwiZmFjdHMiXQ\\\",\\\"trust_tier\\\":\\\"operator_curated\\\",\\\"origin\\\":\\\"managed_file_import\\\"},{\\\"slug\\\":\\\"decisions\\\",\\\"title\\\":\\\"Decisions log\\\",\\\"type\\\":\\\"note\\\",\\\"chunk_text\\\":\\\"# Decisions log\\\\n\\\\n## 2026-09-03: Payments move from Stripe to Paddle\\\\nDecided by Ana Okafor (CEO). Reason: Paddle is merchant of record, so we stop filing VAT in 14 EU countries ourselves. All new payment code uses the Paddle Billing API (`@paddle/paddle-n"
+ },
+ {
+  "tool": "Bash",
+  "input": {
+   "command": "cat README.md; find src | head -30",
+   "description": "Read README and list src"
+  }
+ },
+ {
+  "result": "\"# larkfield-api\\nExpress API for the Larkfield grocery-list app. `npm start`.\\nsrc\\nsrc/server.js\\nsrc/lists.js\""
+ },
+ {
+  "text": "GBrain says CI uses Node 22.11 exactly and must not move to Node 24. I'll pin that version. The project has no lockfile, so I'll use `npm install` instead of `npm ci`."
+ },
+ {
+  "tool": "Write",
+  "input": {
+   "file_path": "/tmp/gbb/shared-ci_node-2/.github/workflows/ci.yml",
+   "content": "name: CI\n\non:\n  push:\n    branches: [main]\n  pull_request:\n\njobs:\n  test:\n    runs-on: ubuntu-latest\n    steps:\n      - uses: actions/checkout@v4\n\n      - uses: actions/setup-node@v4\n        with:\n          # Pinned exactly: Node 24 breaks jsdom tests (built-in localStorage).\n          node-version: '22.11'\n          cache: npm\n\n      - name: Install dependencies\n        run: npm install\n\n      - name: Run tests\n        run: npm test\n"
+  }
+ },
+ {
+  "result": "\"File created successfully at: /tmp/gbb/shared-ci_node-2/.github/workflows/ci.yml (file state is current in your context \\u2014 no need to Read it back)\""
+ },
+ {
+  "text": "`cache: npm` makes setup-node fail when there's no lockfile, so I'm removing it."
+ },
+ {
+  "tool": "Edit",
+  "input": {
+   "replace_all": false,
+   "file_path": "/tmp/gbb/shared-ci_node-2/.github/workflows/ci.yml",
+   "old_string": "          node-version: '22.11'\n          cache: npm\n",
+   "new_string": "          node-version: '22.11'\n"
+  }
+ },
+ {
+  "result": "\"The file /tmp/gbb/shared-ci_node-2/.github/workflows/ci.yml has been updated successfully. (file state is current in your context \\u2014 no need to Read it back)\""
+ },
+ {
+  "text": "I added `.github/workflows/ci.yml`. I haven't run it, because there's no git remote here and no GitHub Actions runner locally.\n\n- **Triggers:** pushes to `main`, and all pull requests.\n- **Steps:** checkout, set up Node, `npm install`, then `npm test`. That runs `node --test`.\n- **Node version:** pinned to `22.11`. GBrain notes say CI must stay on exactly 22.11, because Node 24 breaks the jsdom tests, and the 2026-11-04 sync confirmed it. There's a comment in the file so nobody bumps it by accident.\n- **Install and cache:** the repo has no lockfile, so I used `npm install` instead of `npm ci`. I also left out npm caching, since setup-node's cache option fails without a lockfile. If you commit a `package-lock.json`, switch to `npm ci` and add `cache: npm`.\n\nGBrain's semantic search was unavailable during my lookup, so it ran keyword-only. The Node pin came from that lookup. I can't rule out other CI notes it missed."
+ },
+ {
+  "final": "I added `.github/workflows/ci.yml`. I haven't run it, because there's no git remote here and no GitHub Actions runner locally.\n\n- **Triggers:** pushes to `main`, and all pull requests.\n- **Steps:** checkout, set up Node, `npm install`, then `npm test`. That runs `node --test`.\n- **Node version:** pinned to `22.11`. GBrain notes say CI must stay on exactly 22.11, because Node 24 breaks the jsdom tests, and the 2026-11-04 sync confirmed it. There's a comment in the file so nobody bumps it by accident.\n- **Install and cache:** the repo has no lockfile, so I used `npm install` instead of `npm ci`. I also left out npm caching, since setup-node's cache option fails without a lockfile. If you commit a `package-lock.json`, switch to `npm ci` and add `cache: npm`.\n\nGBrain's semantic search was unavailable during my lookup, so it ran keyword-only. The Node pin came from that lookup. I can't rule out other CI notes it missed.",
+  "num_turns": 7
+ }
+]

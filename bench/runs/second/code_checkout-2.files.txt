@@ -1,0 +1,63 @@
+=== ./README.md
+# larkfield-api
+Express API for the Larkfield grocery-list app. `npm start`.
+=== ./package.json
+{ "name": "larkfield-api", "version": "0.3.0", "type": "module", "main": "src/server.js",
+  "scripts": { "start": "node src/server.js", "test": "node --test" },
+  "dependencies": { "express": "^5.1.0", "pg": "^8.16.0" } }
+=== ./src/server.js
+import express from 'express';
+import { listsForHousehold } from './lists.js';
+import { createCheckout } from './checkout.js';
+
+const app = express();
+app.use(express.json());
+
+app.get('/households/:id/lists', async (req, res) => {
+  res.json(await listsForHousehold(req.params.id));
+});
+
+app.post('/checkout', async (req, res) => {
+  const { householdId, priceId, successUrl, cancelUrl } = req.body ?? {};
+  if (!householdId || !priceId || !successUrl || !cancelUrl) {
+    return res.status(400).json({ error: 'householdId, priceId, successUrl and cancelUrl are required' });
+  }
+  try {
+    res.status(201).json(await createCheckout({ householdId, priceId, successUrl, cancelUrl }));
+  } catch (err) {
+    res.status(502).json({ error: err.message });
+  }
+});
+
+app.listen(process.env.PORT || 3000);
+=== ./src/lists.js
+import pg from 'pg';
+const pool = new pg.Pool({ connectionString: process.env.DATABASE_URL });
+
+export async function listsForHousehold(id) {
+  const { rows } = await pool.query('select * from lists where household_id = $1', [id]);
+  return rows;
+}
+=== ./src/checkout.js
+// Creates a subscription checkout session with the payment provider (Stripe Checkout API).
+export async function createCheckout({ householdId, priceId, successUrl, cancelUrl }) {
+  const body = new URLSearchParams({
+    mode: 'subscription',
+    client_reference_id: String(householdId),
+    'line_items[0][price]': priceId,
+    'line_items[0][quantity]': '1',
+    success_url: successUrl,
+    cancel_url: cancelUrl,
+  });
+  const resp = await fetch('https://api.stripe.com/v1/checkout/sessions', {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${process.env.PAYMENT_API_KEY}`,
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    body,
+  });
+  const data = await resp.json();
+  if (!resp.ok) throw new Error(data.error?.message || `Payment provider error ${resp.status}`);
+  return { id: data.id, url: data.url };
+}

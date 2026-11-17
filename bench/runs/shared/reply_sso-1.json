@@ -1,0 +1,37 @@
+[
+ {
+  "tool": "ToolSearch",
+  "input": {
+   "query": "select:mcp__gbrain__search,mcp__gbrain__query",
+   "max_results": 2
+  }
+ },
+ {
+  "result": "[{\"type\": \"tool_reference\", \"tool_name\": \"mcp__gbrain__search\"}, {\"type\": \"tool_reference\", \"tool_name\": \"mcp__gbrain__query\"}]"
+ },
+ {
+  "tool": "mcp__gbrain__query",
+  "input": {
+   "query": "Do we support SSO? Team plan SSO single sign-on SAML availability"
+  }
+ },
+ {
+  "result": "[{\"type\": \"text\", \"text\": \"[{\\\"slug\\\":\\\"decisions\\\",\\\"title\\\":\\\"Decisions log\\\",\\\"type\\\":\\\"note\\\",\\\"chunk_text\\\":\\\"# Decisions log\\\\n\\\\n## 2026-09-03: Payments move from Stripe to Paddle\\\\nDecided by Ana Okafor (CEO). Reason: Paddle is merchant of record, so we stop filing VAT in 14 EU countries ourselves. All new payment code uses the Paddle Billing API (`@paddle/paddle-node-sdk`). Stripe code is frozen and will be removed in January.\\\\n\\\\n## 2026-10-01: Keep the free plan\\\\nDecided by Ana Okafor. Reason: 38% of paid households started on free, and students asked for it in the October survey. Free stays capped at 2 lists.\\\\n\\\\n## 2026-10-20: SSO only on the Enterprise plan, shipping Q1 2027\\\\nDecided by Ana Okafor and Priya Raman. SAML SSO is not available today. It ships in Q1 2027 and only on Enterprise. Do not promise it on Team.\\\\n\\\\n## 2026-10-28: Sentry rejected\\\\nWe tried Sentry for two weeks; the event volume cost was too high. We self-host GlitchTip instead (Sentry-compatible SDK, DSN in GLITCHTIP_DSN).\\\",\\\"chunk_id\\\":2,\\\"score\\\":0.1672,\\\"source_id\\\":\\\"company\\\",\\\"effective_date\\\":\\\"2026-11-17\\\",\\\"effective_date_source\\\":\\\"fallback\\\",\\\"evidence\\\":\\\"weak_semantic\\\",\\\"create_safety\\\":\\\"unknown\\\",\\\"id\\\":\\\"gbrain-page:v1:WyJjb21wYW55IiwiZGVjaXNpb25zIl0\\\",\\\"trust_tier\\\":\\\"operator_curated\\\",\\\"origin\\\":\\\"managed_file_import\\\"},{\\\"slug\\\":\\\"facts\\\",\\\"title\\\":\\\"Facts: Larkfield Labs (fictional demo company)\\\",\\\"type\\\":\\\"note\\\",\\\"chunk_text\\\":\\\"# Facts: Larkfield Labs (fictio"
+ },
+ {
+  "tool": "mcp__gbrain__search",
+  "input": {
+   "query": "SSO OR \"single sign-on\" OR SAML OR \"Team plan\" OR Enterprise"
+  }
+ },
+ {
+  "result": "[{\"type\": \"text\", \"text\": \"[{\\\"slug\\\":\\\"decisions\\\",\\\"title\\\":\\\"Decisions log\\\",\\\"type\\\":\\\"note\\\",\\\"chunk_text\\\":\\\"# Decisions log\\\\n\\\\n## 2026-09-03: Payments move from Stripe to Paddle\\\\nDecided by Ana Okafor (CEO). Reason: Paddle is merchant of record, so we stop filing VAT in 14 EU countries ourselves. All new payment code uses the Paddle Billing API (`@paddle/paddle-node-sdk`). Stripe code is frozen and will be removed in January.\\\\n\\\\n## 2026-10-01: Keep the free plan\\\\nDecided by Ana Okafor. Reason: 38% of paid households started on free, and students asked for it in the October survey. Free stays capped at 2 lists.\\\\n\\\\n## 2026-10-20: SSO only on the Enterprise plan, shipping Q1 2027\\\\nDecided by Ana Okafor and Priya Raman. SAML SSO is not available today. It ships in Q1 2027 and only on Enterprise. Do not promise it on Team.\\\\n\\\\n## 2026-10-28: Sentry rejected\\\\nWe tried Sentry for two weeks; the event volume cost was too high. We self-host GlitchTip instead (Sentry-compatible SDK, DSN in GLITCHTIP_DSN).\\\",\\\"chunk_id\\\":2,\\\"score\\\":0.1748,\\\"source_id\\\":\\\"company\\\",\\\"effective_date\\\":\\\"2026-11-17\\\",\\\"effective_date_source\\\":\\\"fallback\\\",\\\"evidence\\\":\\\"weak_semantic\\\",\\\"create_safety\\\":\\\"unknown\\\",\\\"id\\\":\\\"gbrain-page:v1:WyJjb21wYW55IiwiZGVjaXNpb25zIl0\\\",\\\"trust_tier\\\":\\\"operator_curated\\\",\\\"origin\\\":\\\"managed_file_import\\\"}]\"}, {\"type\": \"text\", \"text\": \"[gbrain search] Rows are a ranked top-K, not proof of coverage. Keyword matches: 1 page (pages matching the query's k"
+ },
+ {
+  "text": "Here's a draft, based on the 2026-10-20 decision in your notes. SSO isn't available yet, it's planned for Enterprise only in Q1 2027, and the decision says not to promise it on Team.\n\n---\n\n**Subject:** Re: SSO support\n\nHi [Name],\n\nThanks for asking. We don't support SSO today. We're planning SAML SSO for our Enterprise plan, and it's currently scheduled for Q1 2027. It won't be included in the Team plan.\n\nTeam accounts can still sign in with email and password. If SSO is a requirement for you, I can pass your details to us so we can talk about Enterprise when it launches.\n\nBest,\nThe Larkfield team\n\n---\n\nI left out any Team-plan workaround or date commitment, since the notes don't mention either. The Q1 2027 timing is a plan, so you may want to say \"currently planned\" rather than promise it. I also assumed the email and password sign-in line, so check that it's accurate before sending."
+ },
+ {
+  "final": "Here's a draft, based on the 2026-10-20 decision in your notes. SSO isn't available yet, it's planned for Enterprise only in Q1 2027, and the decision says not to promise it on Team.\n\n---\n\n**Subject:** Re: SSO support\n\nHi [Name],\n\nThanks for asking. We don't support SSO today. We're planning SAML SSO for our Enterprise plan, and it's currently scheduled for Q1 2027. It won't be included in the Team plan.\n\nTeam accounts can still sign in with email and password. If SSO is a requirement for you, I can pass your details to us so we can talk about Enterprise when it launches.\n\nBest,\nThe Larkfield team\n\n---\n\nI left out any Team-plan workaround or date commitment, since the notes don't mention either. The Q1 2027 timing is a plan, so you may want to say \"currently planned\" rather than promise it. I also assumed the email and password sign-in line, so check that it's accurate before sending.",
+  "num_turns": 4
+ }
+]

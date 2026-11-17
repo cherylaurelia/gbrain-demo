@@ -1,0 +1,10 @@
+{
+ "decision_free_plan": "What did we decide about a free plan, and why?",
+ "people_pg_upgrade": "Who should I loop in on the Postgres upgrade, and when is it planned?",
+ "code_checkout": "Add a POST /checkout endpoint to this app that creates a checkout for a household's subscription with our payment provider. Keep it small.",
+ "code_env": "Write a .env.example for running this app against our staging environment.",
+ "reply_sso": "Draft a short reply to a customer on the Team plan asking whether we support SSO.",
+ "ci_node": "Add a GitHub Actions CI workflow that installs dependencies and runs npm test.",
+ "code_errors": "Add error tracking to this app.",
+ "control_bug": "In src/lists.js, make listsForHousehold return lists ordered by name."
+}

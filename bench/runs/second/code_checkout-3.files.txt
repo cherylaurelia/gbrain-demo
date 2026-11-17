@@ -1,0 +1,54 @@
+=== ./README.md
+# larkfield-api
+Express API for the Larkfield grocery-list app. `npm start`.
+=== ./package.json
+{ "name": "larkfield-api", "version": "0.3.0", "type": "module", "main": "src/server.js",
+  "scripts": { "start": "node src/server.js", "test": "node --test" },
+  "dependencies": { "express": "^5.1.0", "pg": "^8.16.0" } }
+=== ./src/server.js
+import express from 'express';
+import { listsForHousehold } from './lists.js';
+
+const app = express();
+app.use(express.json());
+
+app.get('/households/:id/lists', async (req, res) => {
+  res.json(await listsForHousehold(req.params.id));
+});
+
+// Assumes Stripe Checkout; needs STRIPE_SECRET_KEY, STRIPE_PRICE_ID, APP_URL.
+app.post('/checkout', async (req, res) => {
+  const { householdId } = req.body ?? {};
+  if (!householdId) return res.status(400).json({ error: 'householdId required' });
+
+  const params = new URLSearchParams({
+    mode: 'subscription',
+    'line_items[0][price]': process.env.STRIPE_PRICE_ID,
+    'line_items[0][quantity]': '1',
+    client_reference_id: String(householdId),
+    'subscription_data[metadata][household_id]': String(householdId),
+    success_url: `${process.env.APP_URL}/billing/success`,
+    cancel_url: `${process.env.APP_URL}/billing/cancel`,
+  });
+  const r = await fetch('https://api.stripe.com/v1/checkout/sessions', {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${process.env.STRIPE_SECRET_KEY}`,
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    body: params,
+  });
+  const session = await r.json();
+  if (!r.ok) return res.status(502).json({ error: session.error?.message ?? 'provider error' });
+  res.status(201).json({ id: session.id, url: session.url });
+});
+
+app.listen(process.env.PORT || 3000);
+=== ./src/lists.js
+import pg from 'pg';
+const pool = new pg.Pool({ connectionString: process.env.DATABASE_URL });
+
+export async function listsForHousehold(id) {
+  const { rows } = await pool.query('select * from lists where household_id = $1', [id]);
+  return rows;
+}

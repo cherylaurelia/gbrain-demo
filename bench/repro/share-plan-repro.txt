@@ -1,0 +1,38 @@
+gbrain 0.60.733.0
+init exit 0
+setup claude-code exit 0
+== session 1 opens the brain
+== session 2 starts and calls gbrain_status
+reason: lock_held
+user_message: Your gbrain brain is already open in another gbrain serve (PID 41095), usually started by another agent session, so this session can't use memory right now. Close that session and I'll reconnect, or I can set up one shared gbrain server so both sessions work at once. Which do you prefer?
+plan step 1: kill 41095
+plan step 2: gbrain serve --http
+plan step 3: gbrain bootstrap harness --harness all --yes
+== follow share_http_plan
+step 1 done (owner session closed)
+step 2: gbrain serve --http up: 200
+
+$ gbrain bootstrap harness --harness all --yes
+gbrain bootstrap harness — wire framework-spawned coding sessions to this brain
+
+Will do, on this machine:
+  1. Mint an independent bearer token per harness under 'bootstrap-harness' (scopes: read+write+skills_member_self; sees takes marked 'world'; reads span this brain's federated sources). Any prior harness token is revoked only after the new one is wired and verified.
+  2. Follow this brain's authorized shared-skills catalog using an owned native router and private installation receipts. No editor authority, automatic execution, extra capture, or identity changes. Restart sessions after updates; native activation remains unverified. Opt out with --skills memory-only.
+  4. Wire the five lifecycle hooks (SessionStart/UserPromptSubmit/Stop/SessionEnd/PreCompact) in user scope.
+  5. Session-transcript capture: every Claude Code session's transcript on this machine is secret-scanned and captured into the brain's corpus (Stop/SessionEnd hooks). Opt out of just this with the no-capture flag.
+
+Reach, plainly: EVERY Claude Code session on this machine — any repo, any
+framework-spawned agent — can read AND write this brain through these tools.
+Hooks run in every Claude Code session (context injection + transcript capture); auto-commit/push lanes stay inert outside gbrain agent workspaces.
+Off-ramps: GBRAIN_HOOKS=0 (runtime), `gbrain bootstrap harness --remove`, `gbrain auth revoke --id <id>` (see auth list), `claude mcp remove gbrain --scope user`.
+a live `gbrain serve` holds this PGLite brain, so the harness cannot mint a token, and with the serve stopped its health check fails. Pre-mint the token with the harness grant (scopes read,write,skills_member_self and its operation list), then use --token:
+  1. stop the serve that holds this brain
+  2. gbrain auth create bootstrap-harness --scopes read,write,skills_member_self
+  4. start `gbrain serve --http` again
+  5. re-run this `gbrain bootstrap harness` command with --token <the token step 2 printed>
+(Postgres brains mint fine while the serve runs.)
+If you are stuck: run `gbrain bootstrap status --json` and relay the "support" block verbatim.
+[exit 1]
+
+harness MCP entry after the plan:
+stdio

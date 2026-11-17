@@ -1,0 +1,27 @@
+@import "tailwindcss";
+
+/* From gbrain.io's app CSS: navy base (#0b1232 / #121d45 / #16214f), light-blue buttons, clay and forest tints, Libre Franklin + JetBrains Mono. */
+@theme {
+  --color-base: #0b1232;
+  --color-card: #121d45;
+  --color-sheet: #16214f;
+  --color-line: #2a3a70;
+  --color-ink: #f2f4fa;
+  --color-ink-2: #c3cbe2;
+  --color-ink-3: #9aa6c8;
+  --color-button: #a9c4f0;
+  --color-button-ink: #0b1232;
+  --color-link: #9dd2ff;
+  --color-err: #ffb5a4;
+  --color-err-soft: #3f150d;
+  --color-ok: #acddac;
+  --color-ok-soft: #12301a;
+  --font-sans: var(--font-franklin), "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, "SF Mono", monospace;
+}
+
+body {
+  background: var(--color-base);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+}

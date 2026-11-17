@@ -1,0 +1,28 @@
+[
+ {
+  "tool": "mcp__gbrain__recall",
+  "input": {
+   "query": "free plan decision"
+  }
+ },
+ {
+  "result": "[{\"type\": \"text\", \"text\": \"{\\\"facts\\\":[],\\\"total\\\":0,\\\"facts_order\\\":\\\"newest\\\",\\\"protocol_version\\\":1,\\\"results\\\":[{\\\"slug\\\":\\\"decisions\\\",\\\"title\\\":\\\"Decisions log\\\",\\\"chunk\\\":\\\"# Decisions log\\\\n\\\\n## 2026-09-03: Payments move from Stripe to Paddle\\\\nDecided by Ana Okafor (CEO). Reason: Paddle is merchant of record, so we stop filing VAT in 14 EU countries ourselves. All new payment code uses the Paddle Billing API (`@paddle/paddle-node-sdk`). Stripe code is frozen and will be removed in January.\\\\n\\\\n## 2026-10-01: Keep the free plan\\\\nDecided by Ana Okafor. Reason: 38% of paid households started on free, and students asked for it in the October survey. Free stays capped at 2 lists.\\\\n\\\\n## 2026-10-20: SSO only on the Enterprise plan, shipping Q1 2027\\\\nDecided by Ana Okafor and Priya Raman. SAML SSO is not available today. It ships in Q1 2027 and only on Enterprise. Do not promise it on Team.\\\\n\\\\n## 2026-10-28: Sentry rejected\\\\nWe tried Sentry for two weeks; the event volume cost was too high. We self-host GlitchTip instead (Sentry-compatible SDK, DSN in GLITCHTIP_DSN).\\\",\\\"evidence\\\":\\\"weak_semantic\\\",\\\"create_safety\\\":\\\"unknown\\\",\\\"provenance\\\":\\\"decisions\\\",\\\"source_id\\\":\\\"company\\\",\\\"trust_tier\\\":\\\"operator_curated\\\",\\\"origin\\\":\\\"managed_file_import\\\"}],\\\"search_degraded\\\":\\\"keyword_only_embedding_disabled\\\"}\"}, {\"type\": \"text\", \"text\": \"[gbrain notice degraded_recall kind=degraded]\\nwhy: Recall was degraded (keyword_only_no_embedding_provider): semantic (vector) s"
+ },
+ {
+  "tool": "ToolSearch",
+  "input": {
+   "query": "select:mcp__gbrain__recall",
+   "max_results": 1
+  }
+ },
+ {
+  "result": "[{\"type\": \"tool_reference\", \"tool_name\": \"mcp__gbrain__recall\"}]"
+ },
+ {
+  "text": "We decided to **keep the free plan**. Ana Okafor decided this on 2026-10-01.\n\n**Why:**\n- 38% of paid households started on the free plan, so it feeds paid conversion.\n- Students asked for it in the October survey.\n\n**Limit:** the free plan stays capped at 2 lists.\n\nThis comes from the Decisions log in GBrain. The search ran in keyword-only mode, so I may have missed related notes, such as a longer discussion of the trade-offs. The log entry itself is clear."
+ },
+ {
+  "final": "We decided to **keep the free plan**. Ana Okafor decided this on 2026-10-01.\n\n**Why:**\n- 38% of paid households started on the free plan, so it feeds paid conversion.\n- Students asked for it in the October survey.\n\n**Limit:** the free plan stays capped at 2 lists.\n\nThis comes from the Decisions log in GBrain. The search ran in keyword-only mode, so I may have missed related notes, such as a longer discussion of the trade-offs. The log entry itself is clear.",
+  "num_turns": 3
+ }
+]

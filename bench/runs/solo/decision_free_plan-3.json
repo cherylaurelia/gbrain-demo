@@ -1,0 +1,27 @@
+[
+ {
+  "tool": "mcp__gbrain__recall",
+  "input": {
+   "query": "free plan decision"
+  }
+ },
+ {
+  "tool": "Bash",
+  "input": {
+   "command": "ls -la /tmp/gbb/solo-decision_free_plan-3"
+  }
+ },
+ {
+  "result": "\"total 24\\ndrwxr-xr-x@  6 user  wheel   192 Nov 17 00:56 .\\ndrwxr-xr-x@ 66 user  wheel  2112 Nov 17 00:56 ..\\n-rw-r--r--@  1 user  wheel   916 Nov 17 00:56 CLAUDE.md\\n-rw-r--r--@  1 user  wheel    77 Nov 17 00:56 README.md\\n-rw-r--r--@  1 user  wheel   222 Nov 17 00:56 package.json\\ndrwxr-xr-x@  4 user  wheel   128 Nov 17 00:56 src\""
+ },
+ {
+  "result": "[{\"type\": \"text\", \"text\": \"{\\\"facts\\\":[],\\\"total\\\":0,\\\"facts_order\\\":\\\"newest\\\",\\\"protocol_version\\\":1,\\\"results\\\":[{\\\"slug\\\":\\\"decisions\\\",\\\"title\\\":\\\"Decisions log\\\",\\\"chunk\\\":\\\"# Decisions log\\\\n\\\\n## 2026-09-03: Payments move from Stripe to Paddle\\\\nDecided by Ana Okafor (CEO). Reason: Paddle is merchant of record, so we stop filing VAT in 14 EU countries ourselves. All new payment code uses the Paddle Billing API (`@paddle/paddle-node-sdk`). Stripe code is frozen and will be removed in January.\\\\n\\\\n## 2026-10-01: Keep the free plan\\\\nDecided by Ana Okafor. Reason: 38% of paid households started on free, and students asked for it in the October survey. Free stays capped at 2 lists.\\\\n\\\\n## 2026-10-20: SSO only on the Enterprise plan, shipping Q1 2027\\\\nDecided by Ana Okafor and Priya Raman. SAML SSO is not available today. It ships in Q1 2027 and only on Enterprise. Do not promise it on Team.\\\\n\\\\n## 2026-10-28: Sentry rejected\\\\nWe tried Sentry for two weeks; the event volume cost was too high. We self-host GlitchTip instead (Sentry-compatible SDK, DSN in GLITCHTIP_DSN).\\\",\\\"evidence\\\":\\\"weak_semantic\\\",\\\"create_safety\\\":\\\"unknown\\\",\\\"provenance\\\":\\\"decisions\\\",\\\"source_id\\\":\\\"company\\\",\\\"trust_tier\\\":\\\"operator_curated\\\",\\\"origin\\\":\\\"managed_file_import\\\"}],\\\"search_degraded\\\":\\\"keyword_only_embedding_disabled\\\"}\"}, {\"type\": \"text\", \"text\": \"[gbrain notice degraded_recall kind=degraded]\\nwhy: Recall was degraded (keyword_only_no_embedding_provider): semantic (vector) s"
+ },
+ {
+  "text": "You decided to **keep the free plan**. Ana Okafor made the call on 2026-10-01, according to the decisions log in GBrain.\n\n**Why:**\n- 38% of paid households started on the free plan, so it feeds paid conversion.\n- Students asked for it in the October survey.\n\n**Terms:** Free stays capped at 2 lists.\n\nI only read the GBrain decisions log. I didn't check the project files, and the recall ran with degraded (keyword-only) search. There may be more discussion of the free plan that the search didn't surface."
+ },
+ {
+  "final": "You decided to **keep the free plan**. Ana Okafor made the call on 2026-10-01, according to the decisions log in GBrain.\n\n**Why:**\n- 38% of paid households started on the free plan, so it feeds paid conversion.\n- Students asked for it in the October survey.\n\n**Terms:** Free stays capped at 2 lists.\n\nI only read the GBrain decisions log. I didn't check the project files, and the recall ran with degraded (keyword-only) search. There may be more discussion of the free plan that the search didn't surface.",
+  "num_turns": 3
+ }
+]
