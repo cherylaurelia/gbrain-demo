@@ -1,0 +1,44 @@
+diff --git a/src/mcp/status-mode.ts b/src/mcp/status-mode.ts
+index a6f6a4df..465f221a 100644
+--- a/src/mcp/status-mode.ts
++++ b/src/mcp/status-mode.ts
+@@ -249,10 +249,18 @@ export function statusFix(state: StatusModeState, t: StatusTransport = 'stdio'):
+     why: 'Run ONE shared HTTP server for every agent session on this machine (keep it running, e.g. under autopilot or a terminal).',
+     then: wireHarnesses,
+   };
++  // PGLite (#6661): bootstrap harness cannot mint while a serve holds the brain, so mint first, then wire with --token.
++  // setup's hooks are already wired (--no-hooks); a plain read,write token carries no join_brain grant (--skills memory-only).
++  const mintThenStart: Action = {
++    argv: ['gbrain', 'auth', 'create', 'bootstrap-harness', '--scopes', 'read,write'], consent: ['credentials'], actor: 'user', requires_exclusive: true,
++    why: 'Mint the harness token while no serve holds the PGLite brain (a live serve blocks minting); keep the token it prints for the last step.',
++    then: { ...startHttp, then: { ...wireHarnesses, argv: [...wireHarnesses.argv!, '--token', '<token printed by gbrain auth create>', '--no-hooks', '--skills', 'memory-only'] } },
++  };
++  const firstShared = loadConfig()?.engine === 'postgres' ? startHttp : mintThenStart;
+   const shareHttp: Action = state.lock_owner?.pid !== undefined
+     ? { argv: ['kill', String(state.lock_owner.pid)], consent: [], actor: 'user', requires_exclusive: false,
+-      why: `Stop ${owner} first (or quit that session); the shared server needs the brain's single-writer lock.`, then: startHttp }
+-    : startHttp;
++      why: `Stop ${owner} first (or quit that session); the shared server needs the brain's single-writer lock.`, then: firstShared }
++    : firstShared;
+   const waitFix: Action = {
+     ...statusCall(t), consent: [], actor: 'user', requires_exclusive: false,
+     why: `Close the session that owns the brain (${owner}); then ${recheck(t)} (re-checked at most every 5 s). ${restartNote(t)}`,
+diff --git a/test/serve-status-mode.serial.test.ts b/test/serve-status-mode.serial.test.ts
+index 06e9d152..d4020033 100644
+--- a/test/serve-status-mode.serial.test.ts
++++ b/test/serve-status-mode.serial.test.ts
+@@ -118,10 +118,11 @@ describe('status-only serve: lock contention → recovery in place (a)', () => {
+     expect(status.fix.next).toBe('tell_user_to_run');
+     expect(status.user_message).toBeTruthy();
+     expect(status.decisions[0].options.map((o: { id: string }) => o.id)).toEqual(['close_owner', 'share_http']);
+-    // The executable shared-HTTP plan: stop the owner → serve --http → rewire harnesses.
++    // The executable shared-HTTP plan on PGLite: stop the owner → mint while no serve holds the brain → serve --http → rewire with that token (#6661).
+     expect(status.share_http_plan.argv).toEqual(['kill', String(status.lock_owner.pid)]);
+-    expect(status.share_http_plan.then.argv).toEqual(['gbrain', 'serve', '--http']);
+-    expect(status.share_http_plan.then.then.argv).toEqual(['gbrain', 'bootstrap', 'harness', '--harness', 'all', '--yes']);
++    expect(status.share_http_plan.then.argv).toEqual(['gbrain', 'auth', 'create', 'bootstrap-harness', '--scopes', 'read,write']);
++    expect(status.share_http_plan.then.then.argv).toEqual(['gbrain', 'serve', '--http']);
++    expect(status.share_http_plan.then.then.then.argv).toEqual(['gbrain', 'bootstrap', 'harness', '--harness', 'all', '--yes', '--token', '<token printed by gbrain auth create>', '--no-hooks', '--skills', 'memory-only']);
+ 
+     // Any other tool: one error block that names gbrain_status.
+     const refused = await second.client.callTool({ name: 'search', arguments: { query: MARKER } });

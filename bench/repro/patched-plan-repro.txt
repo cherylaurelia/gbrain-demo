@@ -1,0 +1,15 @@
+gbrain gbrain 0.60.734.0 on 09fe4c5a + patch
+init [exit 0]
+setup claude-code [exit 0]
+== share_http_plan from gbrain_status:
+["kill", "46701"]
+["gbrain", "auth", "create", "bootstrap-harness", "--scopes", "read,write"]
+["gbrain", "serve", "--http"]
+["gbrain", "bootstrap", "harness", "--harness", "all", "--yes", "--token", "<token printed by gbrain auth create>", "--no-hooks", "--skills", "memory-only"]
+1. kill 46701 [done: session 1 closed]
+2. gbrain auth create bootstrap-harness --scopes read,write [exit 0]
+3. gbrain serve --http [health 200]
+4. gbrain bootstrap harness --harness all --yes --token <token> --no-hooks --skills memory-only [exit 0]
+MCP registered with Claude Code (user scope) -> http://127.0.0.1:3131/mcp
+smoke test: {"version":"0.60.734.0","engine":"pglite","page_count":0,"chunk_count":0,"last_sync_iso":null,"update_available":false,"latest_version":null,"capabi
+harness MCP entry: http

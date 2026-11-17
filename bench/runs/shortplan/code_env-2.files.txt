@@ -1,0 +1,38 @@
+=== ./README.md
+# larkfield-api
+Express API for the Larkfield grocery-list app. `npm start`.
+=== ./package.json
+{ "name": "larkfield-api", "version": "0.3.0", "type": "module", "main": "src/server.js",
+  "scripts": { "start": "node src/server.js", "test": "node --test" },
+  "dependencies": { "express": "^5.1.0", "pg": "^8.16.0" } }
+=== ./.env.example
+# larkfield-api: staging environment (AWS eu-west-2)
+# Copy to .env and fill in the credentials. Never commit the real .env.
+
+# Port the Express server listens on (defaults to 3000 if unset)
+PORT=3000
+
+# Staging Postgres: host pg-stg-3.larkfield.internal, database larkfield_stg.
+# The host is only reachable from inside the staging network/VPN.
+# Replace USER and PASSWORD with your staging DB credentials.
+DATABASE_URL=postgres://USER:PASSWORD@pg-stg-3.larkfield.internal:5432/larkfield_stg
+=== ./src/server.js
+import express from 'express';
+import { listsForHousehold } from './lists.js';
+
+const app = express();
+app.use(express.json());
+
+app.get('/households/:id/lists', async (req, res) => {
+  res.json(await listsForHousehold(req.params.id));
+});
+
+app.listen(process.env.PORT || 3000);
+=== ./src/lists.js
+import pg from 'pg';
+const pool = new pg.Pool({ connectionString: process.env.DATABASE_URL });
+
+export async function listsForHousehold(id) {
+  const { rows } = await pool.query('select * from lists where household_id = $1', [id]);
+  return rows;
+}

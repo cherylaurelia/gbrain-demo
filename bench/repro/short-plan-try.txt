@@ -1,0 +1,12 @@
+gbrain 0.60.734.0
+init [exit 0]
+company notes synced [exit 0]
+setup claude-code [exit 0]
+session 1 holds the brain
+1. session 1's serve stopped
+2. auth create [exit 0]
+3. serve --http up
+4. bootstrap harness --token [exit 0]
+MCP registered with Claude Code (user scope) -> http://127.0.0.1:3131/mcp
+smoke test: {"version":"0.60.734.0","engine":"pglite","page_count":0,"chunk_count":0,"last_sync_iso":null,"update_available":false,"latest_version":null,"capabilities":["large_pages_v1","guest_marker_v1"]}
+harness MCP entry: http

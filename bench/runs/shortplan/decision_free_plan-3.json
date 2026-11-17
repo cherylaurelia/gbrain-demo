@@ -1,0 +1,36 @@
+[
+ {
+  "tool": "ToolSearch",
+  "input": {
+   "query": "select:mcp__gbrain__search,mcp__gbrain__query,mcp__gbrain__get_page",
+   "max_results": 5
+  }
+ },
+ {
+  "result": "[{\"type\": \"tool_reference\", \"tool_name\": \"mcp__gbrain__search\"}, {\"type\": \"tool_reference\", \"tool_name\": \"mcp__gbrain__query\"}, {\"type\": \"tool_reference\", \"tool_name\": \"mcp__gbrain__get_page\"}]"
+ },
+ {
+  "tool": "mcp__gbrain__query",
+  "input": {
+   "query": "decision about free plan and why"
+  }
+ },
+ {
+  "result": "[{\"type\": \"text\", \"text\": \"[{\\\"slug\\\":\\\"decisions\\\",\\\"title\\\":\\\"Decisions log\\\",\\\"type\\\":\\\"note\\\",\\\"chunk_text\\\":\\\"# Decisions log\\\\n\\\\n## 2026-09-03: Payments move from Stripe to Paddle\\\\nDecided by Ana Okafor (CEO). Reason: Paddle is merchant of record, so we stop filing VAT in 14 EU countries ourselves. All new payment code uses the Paddle Billing API (`@paddle/paddle-node-sdk`). Stripe code is frozen and will be removed in January.\\\\n\\\\n## 2026-10-01: Keep the free plan\\\\nDecided by Ana Okafor. Reason: 38% of paid households started on free, and students asked for it in the October survey. Free stays capped at 2 lists.\\\\n\\\\n## 2026-10-20: SSO only on the Enterprise plan, shipping Q1 2027\\\\nDecided by Ana Okafor and Priya Raman. SAML SSO is not available today. It ships in Q1 2027 and only on Enterprise. Do not promise it on Team.\\\\n\\\\n## 2026-10-28: Sentry rejected\\\\nWe tried Sentry for two weeks; the event volume cost was too high. We self-host GlitchTip instead (Sentry-compatible SDK, DSN in GLITCHTIP_DSN).\\\",\\\"chunk_id\\\":2,\\\"score\\\":1,\\\"source_id\\\":\\\"company\\\",\\\"effective_date\\\":\\\"2026-11-17\\\",\\\"effective_date_source\\\":\\\"fallback\\\",\\\"evidence\\\":\\\"keyword_exact\\\",\\\"create_safety\\\":\\\"probable\\\",\\\"id\\\":\\\"gbrain-page:v1:WyJjb21wYW55IiwiZGVjaXNpb25zIl0\\\",\\\"trust_tier\\\":\\\"operator_curated\\\",\\\"origin\\\":\\\"managed_file_import\\\"}]\"}, {\"type\": \"text\", \"text\": \"[gbrain dates] effective_date by effective_date_source: fallback = fallback (page created/imported, not from its text). N"
+ },
+ {
+  "tool": "mcp__gbrain__search",
+  "input": {
+   "query": "free plan OR \"free tier\" OR freemium"
+  }
+ },
+ {
+  "result": "[{\"type\": \"text\", \"text\": \"[{\\\"slug\\\":\\\"decisions\\\",\\\"title\\\":\\\"Decisions log\\\",\\\"type\\\":\\\"note\\\",\\\"chunk_text\\\":\\\"# Decisions log\\\\n\\\\n## 2026-09-03: Payments move from Stripe to Paddle\\\\nDecided by Ana Okafor (CEO). Reason: Paddle is merchant of record, so we stop filing VAT in 14 EU countries ourselves. All new payment code uses the Paddle Billing API (`@paddle/paddle-node-sdk`). Stripe code is frozen and will be removed in January.\\\\n\\\\n## 2026-10-01: Keep the free plan\\\\nDecided by Ana Okafor. Reason: 38% of paid households started on free, and students asked for it in the October survey. Free stays capped at 2 lists.\\\\n\\\\n## 2026-10-20: SSO only on the Enterprise plan, shipping Q1 2027\\\\nDecided by Ana Okafor and Priya Raman. SAML SSO is not available today. It ships in Q1 2027 and only on Enterprise. Do not promise it on Team.\\\\n\\\\n## 2026-10-28: Sentry rejected\\\\nWe tried Sentry for two weeks; the event volume cost was too high. We self-host GlitchTip instead (Sentry-compatible SDK, DSN in GLITCHTIP_DSN).\\\",\\\"chunk_id\\\":2,\\\"score\\\":0.1587,\\\"source_id\\\":\\\"company\\\",\\\"effective_date\\\":\\\"2026-11-17\\\",\\\"effective_date_source\\\":\\\"fallback\\\",\\\"evidence\\\":\\\"weak_semantic\\\",\\\"create_safety\\\":\\\"unknown\\\",\\\"id\\\":\\\"gbrain-page:v1:WyJjb21wYW55IiwiZGVjaXNpb25zIl0\\\",\\\"trust_tier\\\":\\\"operator_curated\\\",\\\"origin\\\":\\\"managed_file_import\\\"}]\"}, {\"type\": \"text\", \"text\": \"[gbrain search] Rows are a ranked top-K, not proof of coverage. Keyword matches: 1 page (pages matching the query's k"
+ },
+ {
+  "text": "You decided to **keep the free plan**. Ana Okafor made the call on 2026-10-01, according to the decisions log in GBrain.\n\n**Why:**\n- **Conversion:** 38% of paid households started on free.\n- **Student demand:** students asked for a free plan in the October survey.\n\n**Limit:** the free plan stays capped at 2 lists.\n\nThe log doesn't mention any alternatives you weighed, such as removing the plan or capping it differently. This GBrain is running keyword-only, so a search could miss notes that are worded differently. I only found this one entry."
+ },
+ {
+  "final": "You decided to **keep the free plan**. Ana Okafor made the call on 2026-10-01, according to the decisions log in GBrain.\n\n**Why:**\n- **Conversion:** 38% of paid households started on free.\n- **Student demand:** students asked for a free plan in the October survey.\n\n**Limit:** the free plan stays capped at 2 lists.\n\nThe log doesn't mention any alternatives you weighed, such as removing the plan or capping it differently. This GBrain is running keyword-only, so a search could miss notes that are worded differently. I only found this one entry."
+ }
+]

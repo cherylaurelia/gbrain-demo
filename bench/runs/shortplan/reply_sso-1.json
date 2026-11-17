@@ -1,0 +1,40 @@
+[
+ {
+  "text": "I'll check GBrain for our SSO and Team plan details first."
+ },
+ {
+  "tool": "ToolSearch",
+  "input": {
+   "query": "select:mcp__gbrain__search,mcp__gbrain__query,mcp__gbrain__get_page",
+   "max_results": 3
+  }
+ },
+ {
+  "result": "[{\"type\": \"tool_reference\", \"tool_name\": \"mcp__gbrain__search\"}, {\"type\": \"tool_reference\", \"tool_name\": \"mcp__gbrain__query\"}, {\"type\": \"tool_reference\", \"tool_name\": \"mcp__gbrain__get_page\"}]"
+ },
+ {
+  "tool": "mcp__gbrain__search",
+  "input": {
+   "query": "SSO OR \"single sign-on\" OR SAML Team plan",
+   "match": "keyword"
+  }
+ },
+ {
+  "result": "[{\"type\": \"text\", \"text\": \"[{\\\"slug\\\":\\\"decisions\\\",\\\"title\\\":\\\"Decisions log\\\",\\\"type\\\":\\\"note\\\",\\\"chunk_text\\\":\\\"# Decisions log\\\\n\\\\n## 2026-09-03: Payments move from Stripe to Paddle\\\\nDecided by Ana Okafor (CEO). Reason: Paddle is merchant of record, so we stop filing VAT in 14 EU countries ourselves. All new payment code uses the Paddle Billing API (`@paddle/paddle-node-sdk`). Stripe code is frozen and will be removed in January.\\\\n\\\\n## 2026-10-01: Keep the free plan\\\\nDecided by Ana Okafor. Reason: 38% of paid households started on free, and students asked for it in the October survey. Free stays capped at 2 lists.\\\\n\\\\n## 2026-10-20: SSO only on the Enterprise plan, shipping Q1 2027\\\\nDecided by Ana Okafor and Priya Raman. SAML SSO is not available today. It ships in Q1 2027 and only on Enterprise. Do not promise it on Team.\\\\n\\\\n## 2026-10-28: Sentry rejected\\\\nWe tried Sentry for two weeks; the event volume cost was too high. We self-host GlitchTip instead (Sentry-compatible SDK, DSN in GLITCHTIP_DSN).\\\",\\\"chunk_id\\\":2,\\\"score\\\":0.1563,\\\"source_id\\\":\\\"company\\\",\\\"effective_date\\\":\\\"2026-11-17\\\",\\\"effective_date_source\\\":\\\"fallback\\\",\\\"id\\\":\\\"gbrain-page:v1:WyJjb21wYW55IiwiZGVjaXNpb25zIl0\\\",\\\"evidence\\\":\\\"keyword_exact\\\",\\\"create_safety\\\":\\\"unknown\\\",\\\"trust_tier\\\":\\\"operator_curated\\\",\\\"origin\\\":\\\"managed_file_import\\\"}]\"}, {\"type\": \"text\", \"text\": \"[gbrain search] Keyword matches: 1 page; showing 1-1, keyword-score order. No more keyword matches.\"}, {\"type\": \"text"
+ },
+ {
+  "tool": "mcp__gbrain__query",
+  "input": {
+   "query": "Do we support SSO on the Team plan? Plan tiers and pricing"
+  }
+ },
+ {
+  "result": "[{\"type\": \"text\", \"text\": \"[{\\\"slug\\\":\\\"decisions\\\",\\\"title\\\":\\\"Decisions log\\\",\\\"type\\\":\\\"note\\\",\\\"chunk_text\\\":\\\"# Decisions log\\\\n\\\\n## 2026-09-03: Payments move from Stripe to Paddle\\\\nDecided by Ana Okafor (CEO). Reason: Paddle is merchant of record, so we stop filing VAT in 14 EU countries ourselves. All new payment code uses the Paddle Billing API (`@paddle/paddle-node-sdk`). Stripe code is frozen and will be removed in January.\\\\n\\\\n## 2026-10-01: Keep the free plan\\\\nDecided by Ana Okafor. Reason: 38% of paid households started on free, and students asked for it in the October survey. Free stays capped at 2 lists.\\\\n\\\\n## 2026-10-20: SSO only on the Enterprise plan, shipping Q1 2027\\\\nDecided by Ana Okafor and Priya Raman. SAML SSO is not available today. It ships in Q1 2027 and only on Enterprise. Do not promise it on Team.\\\\n\\\\n## 2026-10-28: Sentry rejected\\\\nWe tried Sentry for two weeks; the event volume cost was too high. We self-host GlitchTip instead (Sentry-compatible SDK, DSN in GLITCHTIP_DSN).\\\",\\\"chunk_id\\\":2,\\\"score\\\":0.1418,\\\"source_id\\\":\\\"company\\\",\\\"effective_date\\\":\\\"2026-11-17\\\",\\\"effective_date_source\\\":\\\"fallback\\\",\\\"evidence\\\":\\\"weak_semantic\\\",\\\"create_safety\\\":\\\"unknown\\\",\\\"id\\\":\\\"gbrain-page:v1:WyJjb21wYW55IiwiZGVjaXNpb25zIl0\\\",\\\"trust_tier\\\":\\\"operator_curated\\\",\\\"origin\\\":\\\"managed_file_import\\\"},{\\\"slug\\\":\\\"facts\\\",\\\"title\\\":\\\"Facts: Larkfield Labs (fictional demo company)\\\",\\\"type\\\":\\\"note\\\",\\\"chunk_text\\\":\\\"# Facts: Larkfield Labs (fictio"
+ },
+ {
+  "text": "Here's a draft reply:\n\n---\n\n**Subject:** Re: SSO on the Team plan\n\nHi [Name],\n\nThanks for asking. SSO isn't available today, including on the Team plan.\n\nWe're building SAML SSO now and expect to ship it in Q1 2027. It will be an Enterprise plan feature, so it won't be included in Team. If SSO is a requirement for you, I can connect you with us about Enterprise when it launches.\n\nIn the meantime, your team can keep signing in with email and password. Let me know if there's anything else I can help with.\n\nBest,\nThe Larkfield team\n\n---\n\nThis follows the 2026-10-20 decision in the decisions log: SAML SSO ships in Q1 2027, Enterprise only, and isn't to be promised on Team. I left out any firm date beyond \"Q1 2027\" and any Enterprise pricing, because the notes don't cover either.\n\nI also assumed email and password sign-in exists, which I didn't confirm in the notes. Please check that line before sending. The brain's semantic search was unavailable, so I only got keyword matches. I'd still treat the SSO decision as the governing record."
+ },
+ {
+  "final": "Here's a draft reply:\n\n---\n\n**Subject:** Re: SSO on the Team plan\n\nHi [Name],\n\nThanks for asking. SSO isn't available today, including on the Team plan.\n\nWe're building SAML SSO now and expect to ship it in Q1 2027. It will be an Enterprise plan feature, so it won't be included in Team. If SSO is a requirement for you, I can connect you with us about Enterprise when it launches.\n\nIn the meantime, your team can keep signing in with email and password. Let me know if there's anything else I can help with.\n\nBest,\nThe Larkfield team\n\n---\n\nThis follows the 2026-10-20 decision in the decisions log: SAML SSO ships in Q1 2027, Enterprise only, and isn't to be promised on Team. I left out any firm date beyond \"Q1 2027\" and any Enterprise pricing, because the notes don't cover either.\n\nI also assumed email and password sign-in exists, which I didn't confirm in the notes. Please check that line before sending. The brain's semantic search was unavailable, so I only got keyword matches. I'd still treat the SSO decision as the governing record."
+ }
+]

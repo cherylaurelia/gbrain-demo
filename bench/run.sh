@@ -3,6 +3,7 @@
 #  solo   : default `gbrain setup claude-code` wiring (stdio MCP + hooks + brain-first block), own brain copy, no other session open
 #  second : same wiring and brain copy, but another `gbrain serve` (a second agent session) already has the brain open
 #  shared : gbrain's own lock_recovery fix: one `gbrain serve --http` + `gbrain bootstrap harness`; sessions share it
+#  shortplan: the proposed 4-step PGLite plan (pre-mint read,write token, serve --http, bootstrap harness --token --no-hooks --skills memory-only); sessions share it
 #  none   : no gbrain at all
 set -u
 B=~/job-scout/projects/gbrain/bench; H2=~/scratch/gbbench-home; GB=~/scratch/gbhome/.bun/bin/gbrain
@@ -26,11 +27,13 @@ case $arm in
     fi;;
   shared) cp $B/brain-first-block-http.md $d/CLAUDE.md
     args+=(--settings $B/hooks-settings.json --strict-mcp-config --mcp-config $B/mcp-shared.json);;
+  shortplan) GH=~/scratch/gbshort-home; cp $B/brain-first-block-http.md $d/CLAUDE.md
+    args+=(--settings $B/hooks-settings.json --strict-mcp-config --mcp-config $B/mcp-short.json);;
   none) args+=(--strict-mcp-config --mcp-config '{"mcpServers":{}}');;
 esac
 cd $d && GBRAIN_HOME=$GH timeout 600 claude -p "$prompt" "${args[@]}" < /dev/null > $out/stream.jsonl 2> $out/stderr.txt
 echo $? > $out/exit.txt
 [ -n "$holder" ] && { grep -q "exited early" $out/holder.log && echo HOLDER_DIED >> $out/holder.log; kill $holder 2>/dev/null; wait $holder 2>/dev/null; }
 (cd $d; for f in $(find . -type f -not -path './node_modules/*' -not -path './.git/*' -not -name CLAUDE.md -newer $B/prompts.json); do echo "=== $f"; cat $f; done > $out/files.txt)
-[ "$GH" != "$H2" ] && rm -rf $GH
+case $arm in solo|second) rm -rf $GH;; esac
 exit 0

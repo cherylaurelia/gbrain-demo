@@ -25,9 +25,10 @@ test("the published results add up to the numbers on the page", () => {
   const rows: GradedRow[] = JSON.parse(readFileSync(new URL("../bench/results.json", import.meta.url), "utf8"));
   const runs = parseRuns(rows);
 
-  assert.equal(runs.length, 72);
+  assert.equal(runs.length, 96);
   assert.deepEqual(cell(runs, "solo"), { right: 17, runs: 21, read: 21, wrong: 1 });
   assert.deepEqual(cell(runs, "second"), { right: 0, runs: 21, read: 0, wrong: 5 });
   assert.deepEqual(cell(runs, "shared"), { right: 21, runs: 21, read: 21, wrong: 0 });
+  assert.deepEqual(cell(runs, "shortplan"), { right: 21, runs: 21, read: 21, wrong: 0 });
   assert.equal(runs.filter((r) => r.arm === "second" && r.key !== CONTROL && r.toldUser).length, 21);
 });

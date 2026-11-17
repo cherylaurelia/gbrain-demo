@@ -1,6 +1,6 @@
 // Turns bench/results.json (one row per headless Claude Code run, written by bench/grade.py) into the page's tables.
 
-export const ARMS = ["solo", "second", "shared"] as const;
+export const ARMS = ["solo", "second", "shared", "shortplan"] as const;
 
 export type Arm = (typeof ARMS)[number];
 

@@ -1,0 +1,54 @@
+=== ./README.md
+# larkfield-api
+Express API for the Larkfield grocery-list app. `npm start`.
+=== ./package.json
+{ "name": "larkfield-api", "version": "0.3.0", "type": "module", "main": "src/server.js",
+  "scripts": { "start": "node src/server.js", "test": "node --test" },
+  "dependencies": { "@paddle/paddle-node-sdk": "^3.0.0", "express": "^5.1.0", "pg": "^8.16.0" } }
+=== ./src/server.js
+import express from 'express';
+import { listsForHousehold } from './lists.js';
+import { createCheckout } from './checkout.js';
+
+const app = express();
+app.use(express.json());
+
+app.get('/households/:id/lists', async (req, res) => {
+  res.json(await listsForHousehold(req.params.id));
+});
+
+app.post('/checkout', async (req, res) => {
+  const { householdId } = req.body ?? {};
+  if (!householdId) return res.status(400).json({ error: 'householdId required' });
+  try {
+    res.status(201).json({ url: await createCheckout(householdId) });
+  } catch (err) {
+    console.error(err);
+    res.status(502).json({ error: 'payment provider error' });
+  }
+});
+
+app.listen(process.env.PORT || 3000);
+=== ./src/lists.js
+import pg from 'pg';
+const pool = new pg.Pool({ connectionString: process.env.DATABASE_URL });
+
+export async function listsForHousehold(id) {
+  const { rows } = await pool.query('select * from lists where household_id = $1', [id]);
+  return rows;
+}
+=== ./src/checkout.js
+import { Paddle, Environment } from '@paddle/paddle-node-sdk';
+
+const paddle = new Paddle(process.env.PADDLE_API_KEY, {
+  environment: process.env.PADDLE_ENV === 'production' ? Environment.production : Environment.sandbox,
+});
+
+// Creates a Paddle transaction for the household's subscription and returns its checkout URL.
+export async function createCheckout(householdId) {
+  const txn = await paddle.transactions.create({
+    items: [{ priceId: process.env.PADDLE_PRICE_ID, quantity: 1 }],
+    customData: { householdId },
+  });
+  return txn.checkout?.url;
+}
